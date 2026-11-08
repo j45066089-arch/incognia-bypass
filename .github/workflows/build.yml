@@ -19,7 +19,7 @@ jobs:
 
       - name: Install THEOS
         run: |
-          git clone --depth 1 https://github.com/theos/theos.git /usr/local/theos
+          sudo git clone --depth 1 https://github.com/theos/theos.git /usr/local/theos
           cd /usr/local/theos
           ./script/install
           export PATH="/usr/local/theos/bin:$PATH"
