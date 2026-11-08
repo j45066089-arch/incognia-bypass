@@ -89,11 +89,6 @@
 - (void)detectFacesWithCompletion:(void(^)(BOOL))completion { %log; completion(YES); }
 %end
 
-%hook ActiveLivenessViewController
-- (void)livenessCheckCompleted:(BOOL)passed { [self livenessCheckCompleted:YES]; }
-- (void)livenessCheckFailed:(NSError *)error { }
-%end
-
 %hook FourthlineVisionDepthData
 - (BOOL)hasValidDepthData { %log; return YES; }
 %end
