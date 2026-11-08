@@ -16,7 +16,7 @@ TWEAK_NAME = IncogniaBypass
 include $(THEOS_MAKE_PATH)/tweak.mk
 
 # Bundle for Revolut
-TARGET = iphone:clang:16.0
+TARGET = iphone:clang:15.6
 
 after-install::
 	install.exec "killall -u com.revolut.revolut"
