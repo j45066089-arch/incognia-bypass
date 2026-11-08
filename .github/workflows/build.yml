@@ -36,7 +36,10 @@ jobs:
 
       - name: Install Toolchain
         run: |
-          sudo -S -p '' git clone --depth 1 https://github.com/kabiroberai/swift-toolchain-linux.git /usr/local/theos/toolchain
+          cd /usr/local/theos/toolchain
+          git clone --depth 1 https://github.com/kabiroberai/swift-toolchain-linux.git tmp
+          mv tmp/linux .
+          rm -rf tmp
           sudo -S -p '' chmod -R 755 /usr/local/theos/toolchain
 
       - name: Build Tweak
