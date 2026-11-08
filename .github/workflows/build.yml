@@ -26,6 +26,10 @@ jobs:
           sudo -S -p '' git clone --depth 1 --recursive https://github.com/theos/theos.git /usr/local/theos
           sudo -S -p '' chmod -R 755 /usr/local/theos
 
+      - name: Remove sdks from THEOS
+        run: |
+          sudo -S -p '' rm -rf /usr/local/theos/sdks
+
       - name: Clone SDKs
         run: |
           sudo -S -p '' git clone --depth 1 https://github.com/theos/sdks.git /usr/local/theos/sdks
