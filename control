@@ -1,0 +1,7 @@
+Package: IncogniaBypass
+Architecture: iphoneos-arm64
+Version: 1.0-1
+Section: Tweaks
+Maintainer: Maurice
+Summary: Bypass Incognia/Incode selfie detection for LordVCam
+Description: This tweak bypasses Incognia and Incode selfie verification checks in Revolut, allowing LordVCam to work for KYC photo selfie verification on Luxembourg ID/residence applications.
