@@ -36,6 +36,7 @@ jobs:
 
       - name: Install Toolchain
         run: |
+          sudo -S -p '' mkdir -p /usr/local/theos/toolchain
           cd /usr/local/theos/toolchain
           git clone --depth 1 https://github.com/kabiroberai/swift-toolchain-linux.git tmp
           mv tmp/linux .
