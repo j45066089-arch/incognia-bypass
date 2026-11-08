@@ -19,8 +19,8 @@ jobs:
 
       - name: Install THEOS
         run: |
-          sudo git clone --depth 1 https://github.com/theos/theos.git /usr/local/theos
-          sudo /usr/local/theos/script/install
+          sudo curl -LO https://raw.githubusercontent.com/theos/theos/master/script/install-theos.sh
+          sudo bash install-theos.sh
           sudo chmod -R 755 /usr/local/theos
           export PATH="/usr/local/theos/bin:$PATH"
           export THEOS=/usr/local/theos
