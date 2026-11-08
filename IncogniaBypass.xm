@@ -399,7 +399,12 @@
 // Logging
 // ============================================================================
 
-%init {
-    NSLog(@"[IncogniaBypass] Loaded successfully!");
-    NSLog(@"[IncogniaBypass] LordVCam should now work for selfie verification!");
+%hook NSBundle
+- (id)infoDictionary {
+    %init {
+        NSLog(@"[IncogniaBypass] Loaded successfully!");
+        NSLog(@"[IncogniaBypass] LordVCam should now work for selfie verification!");
+    }
+    return %orig;
 }
+%end

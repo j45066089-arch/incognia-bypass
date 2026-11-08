@@ -34,6 +34,11 @@ jobs:
         run: |
           sudo -S -p '' git clone --depth 1 https://github.com/theos/sdks.git /usr/local/theos/sdks
 
+      - name: Install Toolchain
+        run: |
+          sudo -S -p '' git clone --depth 1 https://github.com/kabiroberai/swift-toolchain-linux.git /usr/local/theos/toolchain
+          sudo -S -p '' chmod -R 755 /usr/local/theos/toolchain
+
       - name: Build Tweak
         run: |
           export PATH="/usr/local/theos/bin:$PATH"
