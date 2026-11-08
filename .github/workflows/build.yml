@@ -38,7 +38,8 @@ jobs:
         run: |
           sudo -S -p '' mkdir -p /usr/local/theos/toolchain
           sudo -S -p '' git clone --depth 1 https://github.com/kabiroberai/swift-toolchain-linux.git /tmp/toolchain-tmp
-          sudo -S -p '' mv /tmp/toolchain-tmp/linux/* /usr/local/theos/toolchain/
+          ls -la /tmp/toolchain-tmp/
+          sudo -S -p '' cp -r /tmp/toolchain-tmp/* /usr/local/theos/toolchain/
           sudo -S -p '' rm -rf /tmp/toolchain-tmp
           sudo -S -p '' chmod -R 755 /usr/local/theos/toolchain
 
