@@ -1,8 +1,4 @@
-//
-//  IncogniaBypass.xm
-//  Hook Incognia/Incode Selfie Detection for LordVCam
-//
-
+// IncogniaBypass.xm - Fourthline Upload + Local Checks
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
@@ -91,6 +87,85 @@
 
 %hook FourthlineVisionDepthData
 - (BOOL)hasValidDepthData { %log; return YES; }
+%end
+
+%hook NetworkUploadSelfieVideoWorker
+- (void)uploadCompletedWithResult:(id)result error:(NSError *)error {
+    %log; NSLog(@"[IncogniaBypass] Video upload: %@", error ? @"FAILED" : @"SUCCESS");
+    [self uploadCompletedWithResult:result error:nil];
+}
+- (void)handleUploadResponse:(NSDictionary *)response {
+    %log; NSMutableDictionary *m = [response mutableCopy];
+    [m setObject:@(YES) forKey:@"success"]; [m setObject:@(YES) forKey:@"isValid"];
+    [m removeObjectForKey:@"error"]; [m removeObjectForKey:@"errorMessage"];
+    %orig(m);
+}
+%end
+
+%hook NetworkUploadSelfiePictureWorker
+- (void)uploadCompletedWithResult:(id)result error:(NSError *)error {
+    %log; NSLog(@"[IncogniaBypass] Photo upload: %@", error ? @"FAILED" : @"SUCCESS");
+    [self uploadCompletedWithResult:result error:nil];
+}
+- (void)handleUploadResponse:(NSDictionary *)response {
+    %log; NSMutableDictionary *m = [response mutableCopy];
+    [m setObject:@(YES) forKey:@"success"]; [m setObject:@(YES) forKey:@"isValid"];
+    [m removeObjectForKey:@"error"]; [m removeObjectForKey:@"errorMessage"];
+    %orig(m);
+}
+%end
+
+%hook NetworkQesUploadSelfieWorker
+- (void)uploadCompletedWithResult:(id)result error:(NSError *)error {
+    %log; NSLog(@"[IncogniaBypass] QES upload: %@", error ? @"FAILED" : @"SUCCESS");
+    [self uploadCompletedWithResult:result error:nil];
+}
+- (void)handleUploadResponse:(NSDictionary *)response {
+    %log; NSMutableDictionary *m = [response mutableCopy];
+    [m setObject:@(YES) forKey:@"success"]; [m setObject:@(YES) forKey:@"isValid"];
+    [m removeObjectForKey:@"error"]; %orig(m);
+}
+%end
+
+%hook UploadKycWorker
+- (void)uploadCompletedWithResult:(id)result error:(NSError *)error {
+    %log; NSLog(@"[IncogniaBypass] KYC upload: %@", error ? @"FAILED" : @"SUCCESS");
+    [self uploadCompletedWithResult:result error:nil];
+}
+%end
+
+%hook NetworkUploadKycPersonWorker
+- (void)uploadCompletedWithResult:(id)result error:(NSError *)error {
+    %log; NSLog(@"[IncogniaBypass] Person upload: %@", error ? @"FAILED" : @"SUCCESS");
+    [self uploadCompletedWithResult:result error:nil];
+}
+%end
+
+%hook SelfieUploader
+- (void)uploadCompletedWithResult:(id)result error:(NSError *)error {
+    %log; NSLog(@"[IncogniaBypass] SelfieUploader: %@", error ? @"FAILED" : @"SUCCESS");
+    [self uploadCompletedWithResult:result error:nil];
+}
+%end
+
+%hook PersonUploader
+- (void)uploadCompletedWithResult:(id)result error:(NSError *)error {
+    %log; NSLog(@"[IncogniaBypass] PersonUploader: %@", error ? @"FAILED" : @"SUCCESS");
+    [self uploadCompletedWithResult:result error:nil];
+}
+%end
+
+%hook NSURLSession
+- (void)task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
+    %log;
+    if (error) {
+        NSURL *url = task.originalRequest.URL;
+        if (url && [url.absoluteString rangeOfString:@"selfie" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+            NSLog(@"[IncogniaBypass] Selfie upload error: %@", error.localizedDescription);
+        }
+    }
+    %orig;
+}
 %end
 
 %hook NSUserDefaults
