@@ -12,36 +12,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y git curl make wget
-
-      - name: Install THEOS
-        run: |
-          sudo curl -LO https://raw.githubusercontent.com/theos/theos/master/script/install-theos.sh
-          sudo bash install-theos.sh
-          sudo chmod -R 755 /usr/local/theos
-          export PATH="/usr/local/theos/bin:$PATH"
-          export THEOS=/usr/local/theos
-          sudo make -C /usr/local/theos update-sdks
-
-      - name: Install Toolchain
-        run: |
-          cd /usr/local/theos
-          git clone --depth 1 https://github.com/theos/toolchain.git
-          cd toolchain
-          make
-          make install
+      - name: Setup THEOS
+        uses: theos-actions/setup@v2
 
       - name: Build Tweak
         run: |
-          export PATH="/usr/local/theos/bin:$PATH"
-          export THEOS=/usr/local/theos
-          export THEOS_MAKE_PATH=/usr/local/theos/makefiles
-          cd /usr/local/theos
-          make update-sdks
-          cd $GITHUB_WORKSPACE
           make package
 
       - name: Upload Artifact
