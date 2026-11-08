@@ -36,11 +36,10 @@ jobs:
 
       - name: Install Toolchain
         run: |
-          sudo -S -p '' mkdir -p /usr/local/theos/toolchain
-          sudo -S -p '' git clone --depth 1 https://github.com/kabiroberai/swift-toolchain-linux.git /tmp/toolchain-tmp
-          ls -la /tmp/toolchain-tmp/
-          sudo -S -p '' cp -r /tmp/toolchain-tmp/* /usr/local/theos/toolchain/
-          sudo -S -p '' rm -rf /tmp/toolchain-tmp
+          sudo -S -p '' mkdir -p /usr/local/theos/toolchain/linux/iphone/bin
+          cd /tmp
+          wget -q https://github.com/kabiroberai/swift-toolchain-linux/releases/download/v2.3.0/swift-5.8-ubuntu22.04.tar.xz
+          tar -xf swift-5.8-ubuntu22.04.tar.xz -C /usr/local/theos/toolchain --strip-components=1
           sudo -S -p '' chmod -R 755 /usr/local/theos/toolchain
 
       - name: Build Tweak
