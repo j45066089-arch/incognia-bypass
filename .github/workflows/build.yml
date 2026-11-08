@@ -20,11 +20,11 @@ jobs:
       - name: Install THEOS
         run: |
           sudo git clone --depth 1 https://github.com/theos/theos.git /usr/local/theos
-          cd /usr/local/theos
-          ./script/install
+          sudo /usr/local/theos/script/install
+          sudo chmod -R 755 /usr/local/theos
           export PATH="/usr/local/theos/bin:$PATH"
           export THEOS=/usr/local/theos
-          make update-sdks
+          sudo make -C /usr/local/theos update-sdks
 
       - name: Install Toolchain
         run: |
