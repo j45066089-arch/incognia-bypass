@@ -12,19 +12,30 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup THEOS
-        uses: Randomblock1/theos-action@v1
-        with:
-          theos-dir: theos
-          theos-src: https://github.com/theos/theos
-          theos-sdks: https://github.com/theos/sdks
-
-      - name: Create sdks directory
+      - name: Install dependencies
         run: |
-          mkdir -p theos/sdks
+          sudo -S -p '' apt-get update
+          sudo -S -p '' apt-get install -y git curl make wget libxml2-utils libplist-utils
+
+      - name: Clone THEOS
+        run: |
+          git clone --depth 1 --recursive https://github.com/theos/theos.git /usr/local/theos
+          sudo -S -p '' chmod -R 755 /usr/local/theos
+
+      - name: Clone SDKs
+        run: |
+          mkdir -p /usr/local/theos/sdks
+          cd /usr/local/theos/sdks
+          wget -q https://github.com/theos/sdks/archive/refs/heads/master.zip
+          unzip -q master.zip
+          mv sdks-master/*.sdk .
+          rm -rf sdks-master master.zip
 
       - name: Build Tweak
         run: |
+          export PATH="/usr/local/theos/bin:$PATH"
+          export THEOS=/usr/local/theos
+          export THEOS_MAKE_PATH=/usr/local/theos/makefiles
           make package
 
       - name: Upload Artifact
