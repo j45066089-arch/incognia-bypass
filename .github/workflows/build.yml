@@ -19,6 +19,10 @@ jobs:
           theos-src: https://github.com/theos/theos
           theos-sdks: https://github.com/theos/sdks
 
+      - name: Create sdks directory
+        run: |
+          mkdir -p theos/sdks
+
       - name: Build Tweak
         run: |
           make package
