@@ -17,11 +17,17 @@ jobs:
           sudo -S -p '' apt-get update
           sudo -S -p '' apt-get install -y git curl make wget libxml2-utils libplist-utils
 
-      - name: Clone THEOS and SDKs
+      - name: Clean old installations
         run: |
-          sudo -S -p '' rm -rf /usr/local/theos /usr/local/theos/sdks
+          sudo -S -p '' rm -rf /usr/local/theos
+
+      - name: Clone THEOS
+        run: |
           sudo -S -p '' git clone --depth 1 --recursive https://github.com/theos/theos.git /usr/local/theos
           sudo -S -p '' chmod -R 755 /usr/local/theos
+
+      - name: Clone SDKs
+        run: |
           sudo -S -p '' git clone --depth 1 https://github.com/theos/sdks.git /usr/local/theos/sdks
 
       - name: Build Tweak
