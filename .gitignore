@@ -1,0 +1,6 @@
+*.txt
+*.bin
+revolut_binary
+revolut_strings.txt
+incognia_strings.txt
+*.mlmodelc
