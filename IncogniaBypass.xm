@@ -103,13 +103,3 @@
     return result;
 }
 %end
-
-%hook NSBundle
-- (id)infoDictionary {
-    %init {
-        NSLog(@"[IncogniaBypass] Loaded successfully!");
-        NSLog(@"[IncogniaBypass] LordVCam selfie bypass active!");
-    }
-    return %orig;
-}
-%end
